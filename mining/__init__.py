@@ -42,7 +42,7 @@ def setup(on_startup):
 	try:
 	    result = (yield bitcoin_rpc.getblocktemplate())
 	    if isinstance(result, dict):
-		if result['version'] == 2:
+		if result['version'] == 1:
 		    break
 	except Exception, e:
 	    if isinstance(e[2], str):
