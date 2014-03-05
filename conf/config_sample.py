@@ -189,3 +189,9 @@ NOTIFY_EMAIL_USERNAME = ''		# E-Mail server SMTP Logon
 NOTIFY_EMAIL_PASSWORD = ''
 NOTIFY_EMAIL_USETLS = True
 
+# ******************** Text Notification Settings *********************
+
+NOTIFY_TEXT_TO = ['number','number2']            # Where to send Start/Found block notifications
+NOTIFY_TEXT_FROM = 'number_from'    # Sender address
+NOTIFY_TEXT_SID = '' #Twillio SID
+NOTIFY_TEXT_AUTH_TOKEN = '' #Twillio Auth Token
