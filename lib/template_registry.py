@@ -138,7 +138,7 @@ class TemplateRegistry(object):
     def diff_to_target(self, difficulty):
         '''Converts difficulty to target'''
         diff1 = 0x00000000ffff0000000000000000000000000000000000000000000000000000 
-        return diff1 / difficulty
+	return diff1 / difficulty
     
     def get_job(self, job_id):
         '''For given job_id returns BlockTemplate instance or None'''
@@ -223,9 +223,9 @@ class TemplateRegistry(object):
         hash_int = util.uint256_from_str(hash_bin)
         block_hash_hex = "%064x" % hash_int
         header_hex = binascii.hexlify(header_bin)
-                 
         target_user = self.diff_to_target(difficulty)        
-        if hash_int > target_user and \
+	
+	if hash_int > target_user and \
 		( 'prev_jobid' not in session or session['prev_jobid'] < job_id \
 		or 'prev_diff' not in session or hash_int > self.diff_to_target(session['prev_diff']) ):
             raise SubmitException("Share is above target")

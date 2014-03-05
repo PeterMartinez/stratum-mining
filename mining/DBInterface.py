@@ -114,10 +114,10 @@ class DBInterface():
 		self.q.task_done()
 	    # try to do the import, if we fail, log the error and put the data back in the queue
 	    try:
-		log.info("Inserting %s Share Records",datacnt)
+		#log.info("Inserting %s Share Records",datacnt)
 		dbi.import_shares(sqldata)
 	    except Exception as e:
-		log.error("Insert Share Records Failed: %s", e.args[0])
+		log.error("Insert Share Records Failed: %s", e)
 		for k,v in enumerate(sqldata):
 		    self.q.put(v)
 		break		# Allows us to sleep a little
@@ -210,6 +210,9 @@ class DBInterface():
 
     def update_worker_diff(self,username,diff):
 	return self.dbi.update_worker_diff(username,diff)
+
+    def get_worker_diff(self,username):
+	return self.dbi.get_worker_diff(username)
 
     def get_pool_stats(self):
 	return self.dbi.get_pool_stats()

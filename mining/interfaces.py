@@ -3,6 +3,7 @@
    and customize references to interface instances in your launcher.
    (see launcher_demo.tac for an example).
 ''' 
+from stratum import settings
 import time
 from twisted.internet import reactor, defer
 from lib.util import b58encode
@@ -11,6 +12,7 @@ import stratum.logger
 log = stratum.logger.get_logger('interfaces')
 
 import lib.notify_email
+import lib.notify_text
 
 import DBInterface
 dbi = DBInterface.DBInterface()
@@ -37,7 +39,15 @@ class ShareLimiterInterface(object):
            
            - raise SubmitException for stop processing this request
            - call mining.set_difficulty on connection to adjust the difficulty'''
-	return dbi.update_worker_diff(worker_name,settings.POOL_TARGET)
+	
+	new_diff = dbi.get_worker_diff(worker_name)
+	session = connection_ref().get_session()
+	session['prev_diff'] = session['difficulty']
+	session['prev_jobid'] = job_id
+	session['difficulty'] = new_diff
+	connection_ref().rpc('mining.set_difficulty', [new_diff,], is_notification=True)
+
+	#return dbi.update_worker_diff(worker_name,settings.POOL_TARGET)
  
 class ShareManagerInterface(object):
     def __init__(self):
@@ -58,7 +68,7 @@ class ShareManagerInterface(object):
         pass
     
     def on_submit_share(self, worker_name, block_header, block_hash, difficulty, timestamp, is_valid, ip, invalid_reason, share_diff ):
-        log.info("%s (%s) %s %s" % (block_hash, share_diff, 'valid' if is_valid else 'INVALID', worker_name))
+        #log.info("%s (%s) %s %s" % (block_hash, share_diff, 'valid' if is_valid else 'INVALID', worker_name))
 	dbi.queue_share([worker_name,block_header,block_hash,difficulty,timestamp,is_valid, ip, self.block_height, self.prev_hash, 
 		invalid_reason, share_diff ])
  
@@ -70,7 +80,10 @@ class ShareManagerInterface(object):
 	if is_accepted:
 	    notify_email = lib.notify_email.NOTIFY_EMAIL()
 	    notify_email.notify_found_block(worker_name)
-    
+            notify_text = lib.notify_text.NOTIFY_TEXT()
+	    notify_text.notify_found_block(worker_name)
+
+
 class TimestamperInterface(object):
     '''This is the only source for current time in the application.
     Override this for generating unix timestamp in different way.'''

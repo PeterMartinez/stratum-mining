@@ -27,7 +27,7 @@ class DB_Mysql():
     
     def archive_check(self):
 	# Check for found shares to archive
-	self.dbc.execute("select time from shares where upstream_result = 1 order by time limit 1")
+	self.dbc.execute("select UNIX_TIMESTAMP(time) from shares where upstream_result = 1 order by time limit 1")	
 	data = self.dbc.fetchone()
 	if data is None or (data[0] + settings.ARCHIVE_DELAY) > time.time() :
 	    return False
@@ -146,6 +146,14 @@ class DB_Mysql():
 	self.dbc.execute("update pool_worker set difficulty = %s where username = %s",(diff,username))
 	self.dbh.commit()
     
+    def get_worker_diff(self,username):
+	self.dbc.execute("select difficulty from pool_worker where username = %s",
+		(username))
+	data = self.dbc.fetchone()
+	if data[0] > 0 :
+            return data[0]
+        return 16
+
     def clear_worker_diff(self):
 	if settings.DATABASE_EXTEND == True :
 	    self.dbc.execute("update pool_worker set difficulty = 0")
