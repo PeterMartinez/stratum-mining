@@ -13,8 +13,8 @@ class NOTIFY_TEXT():
 
     def notify_found_block(self,worker_name):
         if len(settings.NOTIFY_TEXT_TO) != 0:
-            text = '%s on Stratum server found a block!' % worker_name
-            self.send_texts(settings.NOTIFY_TEXT_TO,'Stratum Server Found Block',text)
+            text = '%s on %s Stratum server found a block!' % (worker_name,settings.COIN_TYPE)
+            self.send_texts(settings.NOTIFY_TEXT_TO,'',text)
 
     def send_texts(self,to,subject,message):
         for person in to:

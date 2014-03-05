@@ -8,7 +8,7 @@ You NEED to set the parameters in BASIC SETTINGS
 
 # ******************** BASIC SETTINGS ***************
 # These are the MUST BE SET parameters!
-
+COIN_TYPE = "FOR MESSAING ENTER COIN TYPE"
 CENTRAL_WALLET = 'set_valid_addresss_in_config!'	# local bitcoin address where money goes
 
 BITCOIN_TRUSTED_HOST = 'localhost'
