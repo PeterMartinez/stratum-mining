@@ -74,13 +74,13 @@ class DB_Mysql():
 		    best_diff = v[10]
 
 		self.dbc.execute("insert into shares " +\
-			"(time,rem_host,username,our_result,upstream_result,reason,solution,block_num,prev_block_hash,useragent,difficulty) " +\
-			"VALUES (FROM_UNIXTIME(%s),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-			(v[4],v[6],v[0],v[5],0,v[9],'',v[7],v[8],'',v[3]) )
+			"(time,un_ts,rem_host,username,our_result,upstream_result,reason,solution,block_num,prev_block_hash,useragent,difficulty) " +\
+			"VALUES (FROM_UNIXTIME(%s),%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+			(v[4],v[4],v[6],v[0],v[5],0,v[9],'',v[7],v[8],'',v[3]) )
 	    else :
-		self.dbc.execute("insert into shares (time,rem_host,username,our_result,upstream_result,reason,solution) VALUES " +\
-			"(FROM_UNIXTIME(%s),%s,%s,%s,%s,%s,%s)",
-			(v[4],v[6],v[0],v[5],0,v[9],'') )
+		self.dbc.execute("insert into shares (time,un_ts,rem_host,username,our_result,upstream_result,reason,solution) VALUES " +\
+			"(FROM_UNIXTIME(%s),%s,%s,%s,%s,%s,%s,%s)",
+			(v[4],v[4],v[6],v[0],v[5],0,v[9],'') )
 
 	if settings.DATABASE_EXTEND :
 	    self.dbc.execute("select value from pool where parameter = 'round_shares'")
