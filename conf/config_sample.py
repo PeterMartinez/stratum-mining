@@ -169,7 +169,6 @@ GW_DISABLE_MIDSTATE = False	# Disable midstate's (Faster but breaks some clients
 GW_SEND_REAL_TARGET = False	# Propigate >1 difficulty to Clients (breaks some clients)
 
 # ******************** Archival Settings *********************
-
 ARCHIVE_SHARES = False		# Use share archiving?
 ARCHIVE_DELAY = 86400		# Seconds after finding a share to archive all previous shares
 ARCHIVE_MODE = 'file'		# Do we archive to a file (file) , or to a database table (db)
@@ -195,3 +194,15 @@ NOTIFY_TEXT_TO = ['number','number2']            # Where to send Start/Found blo
 NOTIFY_TEXT_FROM = 'number_from'    # Sender address
 NOTIFY_TEXT_SID = '' #Twillio SID
 NOTIFY_TEXT_AUTH_TOKEN = '' #Twillio Auth Token
+
+
+# ******************** Twitter  Notification Settings *********************
+
+TWITTER_CONSUMER_KEY = ''
+TWITTER_CONSUMER_SECRET = ''
+TWITTER_ACCESS_TOKEN_KEY = ''
+TWITTER_ACCESS_TOKEN_SECRET = ''
+TWITTER_HASHTAGS = ''
+
+
+

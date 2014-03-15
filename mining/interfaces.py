@@ -13,6 +13,7 @@ log = stratum.logger.get_logger('interfaces')
 
 import lib.notify_email
 import lib.notify_text
+import lib.notify_twitter
 
 import DBInterface
 dbi = DBInterface.DBInterface()
@@ -82,7 +83,8 @@ class ShareManagerInterface(object):
 	    notify_email.notify_found_block(worker_name)
             notify_text = lib.notify_text.NOTIFY_TEXT()
 	    notify_text.notify_found_block(worker_name)
-
+	    notify_twitter = lib.notify_twitter.NOTIFY_TWITTER()
+            notify_twitter.notify_found_block(worker_name)
 
 class TimestamperInterface(object):
     '''This is the only source for current time in the application.

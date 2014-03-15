@@ -113,6 +113,7 @@ class DB_Mysql():
 	self.dbc.execute("update shares set upstream_result = %s, solution = %s where time = FROM_UNIXTIME(%s) and username = %s limit 1",
 		(data[5],data[2],data[4],data[0]))
 	if settings.DATABASE_EXTEND and data[5] == True:
+	    self.dbc.execute("insert into shares_archive_found select * from shares where upstream_result = 1 AND shares.id not in (SELECT id from shares_archive_found)")
 	    self.dbc.execute("update pool_worker set total_found = total_found + 1 where username = %s",(data[0]))
 	    self.dbc.execute("select value from pool where parameter = 'pool_total_found'")
 	    total_found = int(self.dbc.fetchone()[0]) + 1
